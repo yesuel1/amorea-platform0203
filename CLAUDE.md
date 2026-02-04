@@ -5,10 +5,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build & Development Commands
 
 ```bash
-npm run dev          # Start dev server (Firebase Studio manages this automatically)
+npm run dev          # Start dev server (Firebase Studio usually manages this)
 npm run build        # Production build (Next.js 16 with Turbopack)
 npm run start        # Start production server
-npm run lint         # ESLint with next/core-web-vitals + typescript
+npm run lint         # ESLint v9 flat config (core-web-vitals + typescript)
 ```
 
 When running dev manually in Firebase Studio, use `--hostname 0.0.0.0` for preview access:
@@ -16,41 +16,51 @@ When running dev manually in Firebase Studio, use `--hostname 0.0.0.0` for previ
 npx next dev --port 3000 --hostname 0.0.0.0
 ```
 
+No test framework is configured. No tests exist yet.
+
 ## Architecture
 
 **AMOREA Bundang** - 아모레퍼시픽 분당점 뷰티 카운셀러 플랫폼 (Korean-language site).
 
-**Stack:** Next.js 16 (App Router) · React 19 · TypeScript 5 · Tailwind CSS 4 (PostCSS plugin)
+**Stack:** Next.js 16 (App Router) · React 19 · TypeScript 5 · Tailwind CSS 4 (PostCSS plugin, no tailwind.config.js)
 
 ### Route Structure
 
 ```
-/                      → 메인 마케팅 페이지 (8개 섹션, SSG)
-/counselors/[id]       → 카운셀러 상세 프로필 (SSG via generateStaticParams)
-/apply                 → 카운셀러 지원 폼 (Client Component, 3-step wizard)
+/                      → 메인 마케팅 페이지 (8개 섹션, SSG, Server Component)
+/counselors/[id]       → 카운셀러 상세 프로필 (SSG via generateStaticParams, Server Component)
+/apply                 → 카운셀러 지원 폼 ("use client", 3-step wizard with useState)
 ```
 
-### Key Directories
+No API routes, middleware, or server actions exist.
 
-- `src/data/counselors.ts` — 카운셀러 공유 데이터 (메인 + 상세 페이지에서 import). 새 카운셀러 추가 시 이 파일에 추가하면 상세 페이지가 자동 생성됨.
-- `src/app/globals.css` — Tailwind v4 import + 커스텀 애니메이션 키프레임 (float, shimmer, fadeInUp, pulse-glow) + 유틸 클래스 (.gradient-text, .glass-card)
+### Key Data Pattern
 
-### Design System
+`src/data/counselors.ts` is the single source of truth for counselor data. It exports the `Counselor` interface and a `counselors` array. Both the main page grid and `/counselors/[id]` detail pages import from this file. Adding a new counselor object to the array automatically generates its static route via `generateStaticParams()`.
 
+### Shared Components
+
+`src/components/Navbar.tsx` — the only shared component. Client Component with mobile hamburger menu. Accepts optional `links` (custom nav items) and `backLink` (back button for sub-pages) props. Used on all three pages.
+
+### Styling
+
+- **Tailwind CSS 4** via `@tailwindcss/postcss` plugin — configured in `postcss.config.mjs`, no tailwind.config.js
+- **globals.css** — `@import "tailwindcss"` + `@theme inline` block + custom keyframes (float, shimmer, fadeInUp, pulse-glow) + utility classes (.gradient-text, .glass-card)
 - **Color:** Primary #7B1FA2 (purple), Secondary #E91E63 (pink), Dark backgrounds #0f0517–#4a1942
-- **Pattern:** 그라데이션 배경, 글래스모피즘 카드, 글로우/시머 애니메이션
-- **Responsive:** `sm:` breakpoint 기준 모바일 우선
-- **Font:** Geist (Google Fonts), lang="ko"
+- **Font:** Geist Sans + Geist Mono via `next/font/google`, applied as CSS variables in layout.tsx
+- **Responsive:** Mobile-first, `sm:` breakpoint for desktop
 
 ### Component Conventions
 
-- Server Components가 기본. 인터랙티브 폼은 `"use client"` 사용 (apply 페이지).
+- Server Components by default. Only use `"use client"` for interactive state (forms, toggles).
 - Path alias: `@/*` → `src/*`
-- 현재 백엔드/DB 없음 — 정적 데이터. 추후 Firebase 연동 예정.
+- Pages are currently monolithic (large inline JSX). No extracted section components yet.
+- All content is in Korean (lang="ko").
+- No backend/DB — static data only. Firebase integration planned.
 
 ## Environment
 
-Firebase Studio (Cloud Workstations) 환경. `next.config.ts`에 `allowedDevOrigins`로 cloudworkstations.dev 도메인 허용 설정 필요.
+Firebase Studio (Cloud Workstations). `next.config.ts` has `allowedDevOrigins` for `*.cloudworkstations.dev`.
 
 ## Progress Tracking
 
