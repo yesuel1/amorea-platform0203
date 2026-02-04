@@ -38,25 +38,42 @@ No API routes, middleware, or server actions exist.
 
 `src/data/counselors.ts` is the single source of truth for counselor data. It exports the `Counselor` interface and a `counselors` array. Both the main page grid and `/counselors/[id]` detail pages import from this file. Adding a new counselor object to the array automatically generates its static route via `generateStaticParams()`.
 
+**Counselor interface structure:**
+- Core fields: `id`, `name`, `role`, `emoji`, `shortDesc`, `fullDesc`
+- Arrays: `specialties[]`, `certifications[]`, `programs[]` (title+desc), `reviews[]` (name+age+rating+text)
+- Adding a counselor: append to the `counselors` array with a unique `id` (used in URL slug)
+
 ### Shared Components
 
-`src/components/Navbar.tsx` — the only shared component. Client Component with mobile hamburger menu. Accepts optional `links` (custom nav items) and `backLink` (back button for sub-pages) props. Used on all three pages.
+`src/components/Navbar.tsx` — the only shared component. Client Component with mobile hamburger menu.
+
+**Props:**
+- `links?: NavLink[]` — custom nav items (defaults to main page anchors: #about, #counselors, #reviews, #recruit)
+- `backLink?: { href: string; label: string }` — back button for sub-pages (hides default links when set)
+
+**Usage pattern:** Main page uses default links. Sub-pages (`/counselors/[id]`, `/apply`) pass a `backLink` prop.
 
 ### Styling
 
 - **Tailwind CSS 4** via `@tailwindcss/postcss` plugin — configured in `postcss.config.mjs`, no tailwind.config.js
-- **globals.css** — `@import "tailwindcss"` + `@theme inline` block + custom keyframes (float, shimmer, fadeInUp, pulse-glow) + utility classes (.gradient-text, .glass-card)
-- **Color:** Primary #7B1FA2 (purple), Secondary #E91E63 (pink), Dark backgrounds #0f0517–#4a1942
-- **Font:** Geist Sans + Geist Mono via `next/font/google`, applied as CSS variables in layout.tsx
-- **Responsive:** Mobile-first, `sm:` breakpoint for desktop
+- **globals.css** — `@import "tailwindcss"` + `@theme inline` block + custom animations + utility classes:
+  - Keyframes: `float`, `shimmer`, `fadeInUp`, `pulse-glow`
+  - Utilities: `.gradient-text` (animated purple-pink), `.glass-card` (glassmorphism)
+- **Color palette:**
+  - Primary: `#7B1FA2` (purple)
+  - Secondary: `#E91E63` (pink)
+  - Dark backgrounds: `#0f0517` → `#4a1942` (gradient range)
+- **Typography:** Geist Sans + Geist Mono via `next/font/local`, applied as `--font-geist-sans` and `--font-geist-mono` CSS variables
+- **Responsive:** Mobile-first, `sm:` breakpoint (640px+) for desktop. Navbar has mobile hamburger menu with slide-down animation.
 
 ### Component Conventions
 
-- Server Components by default. Only use `"use client"` for interactive state (forms, toggles).
-- Path alias: `@/*` → `src/*`
-- Pages are currently monolithic (large inline JSX). No extracted section components yet.
-- All content is in Korean (lang="ko").
-- No backend/DB — static data only. Firebase integration planned.
+- **Server Components by default.** Only use `"use client"` for interactive state (forms, toggles).
+- **Path alias:** `@/*` → `src/*` (configured in tsconfig.json)
+- **Page structure:** Currently monolithic (large inline JSX). No extracted section components yet.
+- **Language:** All content is in Korean (`lang="ko"` in layout.tsx).
+- **Data layer:** No backend/DB — static data only. Firebase integration planned.
+- **Type safety:** All counselor data is strictly typed via the `Counselor` interface.
 
 ## Environment
 
