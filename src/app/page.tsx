@@ -1,30 +1,7 @@
+import Link from "next/link";
+import { counselors } from "@/data/counselors";
+
 export default function Home() {
-  const counselors = [
-    {
-      name: "김민정",
-      role: "저속노화 스킨케어",
-      desc: "세포 레벨부터 시작하는 진짜 안티에이징. 피부 나이를 되돌리는 맞춤 솔루션.",
-      emoji: "🧬",
-    },
-    {
-      name: "이수진",
-      role: "역노화 메이크업",
-      desc: "건강한 피부 위에 완성하는 글로우 메이크업. 10살 어려 보이는 비밀.",
-      emoji: "✨",
-    },
-    {
-      name: "박영희",
-      role: "이너뷰티 전문",
-      desc: "먹는 것부터 바르는 것까지. 안팎으로 빛나는 역노화 토탈 케어.",
-      emoji: "🌿",
-    },
-    {
-      name: "최은영",
-      role: "바디&웰니스",
-      desc: "체형 관리부터 헤어까지. 라이프스타일 전반의 저속노화 코칭.",
-      emoji: "💎",
-    },
-  ];
 
   const reviews = [
     {
@@ -257,8 +234,9 @@ export default function Home() {
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {counselors.map((c, idx) => (
-              <div
-                key={c.name}
+              <Link
+                key={c.id}
+                href={`/counselors/${c.id}`}
                 className="group relative overflow-hidden rounded-2xl bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
               >
                 {/* 카드 상단 그라데이션 */}
@@ -279,9 +257,12 @@ export default function Home() {
                   <span className="mb-3 inline-block rounded-full bg-gradient-to-r from-[#7B1FA2]/10 to-[#E91E63]/10 px-3 py-1 text-xs font-bold text-[#7B1FA2]">
                     {c.role}
                   </span>
-                  <p className="text-sm leading-relaxed text-gray-500">{c.desc}</p>
+                  <p className="text-sm leading-relaxed text-gray-500">{c.shortDesc}</p>
                 </div>
-              </div>
+                <div className="border-t border-gray-100 px-6 py-3 text-center text-xs font-semibold text-[#7B1FA2] opacity-0 transition-opacity group-hover:opacity-100">
+                  프로필 보기 →
+                </div>
+              </Link>
             ))}
           </div>
         </div>
