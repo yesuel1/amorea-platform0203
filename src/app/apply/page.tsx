@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import Navbar from "@/components/Navbar";
 
 type FormData = {
   name: string;
@@ -95,26 +96,7 @@ export default function ApplyPage() {
 
   return (
     <div className="min-h-screen font-sans">
-      {/* 네비게이션 */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#7B1FA2] to-[#E91E63]">
-              <span className="text-sm font-bold text-white">A</span>
-            </div>
-            <span className="text-lg font-bold tracking-tight">
-              <span className="gradient-text">AMOREA</span>{" "}
-              <span className="text-gray-400 text-xs font-normal">분당점</span>
-            </span>
-          </Link>
-          <Link
-            href="/"
-            className="text-sm font-medium text-gray-500 transition-colors hover:text-[#7B1FA2]"
-          >
-            ← 메인으로
-          </Link>
-        </div>
-      </nav>
+      <Navbar backLink={{ href: "/", label: "← 메인으로" }} />
 
       {/* 헤더 */}
       <section

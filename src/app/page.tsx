@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { counselors } from "@/data/counselors";
+import Navbar from "@/components/Navbar";
 
 export default function Home() {
 
@@ -53,32 +54,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen font-sans">
-      {/* 네비게이션 */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
-          <a href="#" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#7B1FA2] to-[#E91E63]">
-              <span className="text-sm font-bold text-white">A</span>
-            </div>
-            <span className="text-lg font-bold tracking-tight">
-              <span className="gradient-text">AMOREA</span>{" "}
-              <span className="text-gray-400 text-xs font-normal">분당점</span>
-            </span>
-          </a>
-          <div className="hidden gap-6 text-sm font-medium text-gray-600 sm:flex">
-            <a href="#about" className="hover:text-[#7B1FA2] transition-colors">역노화란</a>
-            <a href="#counselors" className="hover:text-[#7B1FA2] transition-colors">카운셀러</a>
-            <a href="#reviews" className="hover:text-[#7B1FA2] transition-colors">후기</a>
-            <a href="#recruit" className="hover:text-[#7B1FA2] transition-colors">함께하기</a>
-          </div>
-          <Link
-            href="/apply"
-            className="hidden rounded-full bg-gradient-to-r from-[#7B1FA2] to-[#E91E63] px-5 py-2 text-xs font-semibold text-white transition-transform hover:scale-105 sm:inline-block"
-          >
-            카운셀러 지원
-          </Link>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* ==================== 히어로 섹션 ==================== */}
       <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 pt-16">
