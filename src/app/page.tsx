@@ -81,17 +81,10 @@ export default function Home() {
             <span className="text-xs font-medium text-white/80">저속노화 · 역노화 뷰티 플랫폼</span>
           </div>
 
-          <h1 className="mb-6 text-4xl font-extrabold leading-tight text-white sm:text-6xl sm:leading-[1.15]">
+          <h1 className="mb-6 text-5xl font-black leading-tight tracking-tighter text-white sm:text-7xl lg:text-8xl sm:leading-[1.1]">
             나이는 숫자일 뿐,
             <br />
-            <span
-              className="bg-clip-text text-transparent"
-              style={{
-                backgroundImage: "linear-gradient(90deg, #F06292, #CE93D8, #F06292)",
-                backgroundSize: "200% auto",
-                animation: "shimmer 3s linear infinite",
-              }}
-            >
+            <span className="gradient-text-gold">
               되돌리는 아름다움
             </span>
           </h1>
@@ -106,13 +99,13 @@ export default function Home() {
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <a
               href="#about"
-              className="animate-pulse-glow w-full rounded-full bg-gradient-to-r from-[#7B1FA2] to-[#E91E63] px-10 py-4 text-sm font-bold text-white transition-transform hover:scale-105 sm:w-auto"
+              className="btn-shimmer animate-glow-gold w-full rounded-full bg-gradient-to-r from-[#D4AF37] via-[#F4E4C1] to-[#B8941E] px-12 py-5 text-base font-black text-[#0a0a0a] shadow-2xl transition-transform hover:scale-105 sm:w-auto"
             >
               역노화의 비밀 알아보기
             </a>
             <Link
               href="/apply"
-              className="w-full rounded-full border border-white/20 bg-white/5 px-10 py-4 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:border-white/40 hover:bg-white/10 sm:w-auto"
+              className="glass-card-premium w-full rounded-full px-12 py-5 text-base font-bold text-white transition-all hover:scale-105 hover:border-[#D4AF37]/50 sm:w-auto"
             >
               카운셀러로 함께하기
             </Link>
@@ -149,7 +142,7 @@ export default function Home() {
             <span className="mb-3 inline-block rounded-full bg-[#F3E5F5] px-4 py-1 text-xs font-bold text-[#7B1FA2]">
               REVERSE AGING
             </span>
-            <h2 className="mb-4 text-3xl font-extrabold text-gray-900 sm:text-4xl">
+            <h2 className="mb-4 text-4xl font-black tracking-tighter text-gray-900 sm:text-5xl">
               <span className="gradient-text">저속노화 · 역노화</span>란?
             </h2>
             <p className="mx-auto max-w-2xl text-base leading-relaxed text-gray-500">
@@ -182,11 +175,11 @@ export default function Home() {
             ].map((item) => (
               <div
                 key={item.title}
-                className={`rounded-2xl bg-gradient-to-br ${item.gradient} p-8 transition-transform hover:-translate-y-1`}
+                className={`card-hover-lift rounded-2xl bg-gradient-to-br ${item.gradient} border border-gray-100 p-8 shadow-lg`}
               >
-                <div className="mb-4 text-4xl">{item.icon}</div>
-                <h3 className="mb-2 text-lg font-bold text-gray-900">{item.title}</h3>
-                <p className="text-sm leading-relaxed text-gray-500">{item.desc}</p>
+                <div className="mb-4 text-5xl">{item.icon}</div>
+                <h3 className="mb-2 text-xl font-black text-gray-900">{item.title}</h3>
+                <p className="text-sm leading-relaxed text-gray-600">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -200,7 +193,7 @@ export default function Home() {
             <span className="mb-3 inline-block rounded-full bg-[#FCE4EC] px-4 py-1 text-xs font-bold text-[#E91E63]">
               EXPERT TEAM
             </span>
-            <h2 className="mb-4 text-3xl font-extrabold text-gray-900 sm:text-4xl">
+            <h2 className="mb-4 text-4xl font-black tracking-tighter text-gray-900 sm:text-5xl">
               역노화 전문 뷰티 카운셀러
             </h2>
             <p className="mx-auto max-w-lg text-base text-gray-500">
@@ -213,7 +206,7 @@ export default function Home() {
               <Link
                 key={c.id}
                 href={`/counselors/${c.id}`}
-                className="group relative overflow-hidden rounded-2xl bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
+                className="card-hover-lift group relative overflow-hidden rounded-2xl bg-white shadow-lg border border-gray-100"
               >
                 {/* 카드 상단 그라데이션 */}
                 <div
@@ -229,11 +222,11 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="p-6 text-center">
-                  <h3 className="mb-1 text-lg font-bold text-gray-900">{c.name}</h3>
-                  <span className="mb-3 inline-block rounded-full bg-gradient-to-r from-[#7B1FA2]/10 to-[#E91E63]/10 px-3 py-1 text-xs font-bold text-[#7B1FA2]">
+                  <h3 className="mb-2 text-xl font-black text-gray-900">{c.name}</h3>
+                  <span className="mb-3 inline-block rounded-full bg-gradient-to-r from-[#D4AF37]/20 to-[#F4E4C1]/30 border border-[#D4AF37]/30 px-4 py-1.5 text-xs font-bold text-[#B8941E]">
                     {c.role}
                   </span>
-                  <p className="text-sm leading-relaxed text-gray-500">{c.shortDesc}</p>
+                  <p className="text-sm leading-relaxed text-gray-600">{c.shortDesc}</p>
                 </div>
                 <div className="border-t border-gray-100 px-6 py-3 text-center text-xs font-semibold text-[#7B1FA2] opacity-0 transition-opacity group-hover:opacity-100">
                   프로필 보기 →
@@ -259,7 +252,7 @@ export default function Home() {
             <span className="mb-3 inline-block rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs font-bold text-[#F06292]">
               YOUR JOURNEY
             </span>
-            <h2 className="mb-4 text-3xl font-extrabold text-white sm:text-4xl">
+            <h2 className="mb-4 text-4xl font-black tracking-tighter text-white sm:text-5xl">
               아름다움에서 자아실현까지
             </h2>
             <p className="mx-auto max-w-lg text-base text-white/60">
@@ -274,11 +267,11 @@ export default function Home() {
                 {idx < journeySteps.length - 1 && (
                   <div className="absolute top-10 left-[calc(50%+40px)] hidden h-0.5 w-[calc(100%-40px)] bg-gradient-to-r from-[#7B1FA2]/30 to-[#E91E63]/30 lg:block" />
                 )}
-                <div className="glass-card flex flex-col items-center rounded-2xl p-8 text-center transition-all hover:-translate-y-1 hover:bg-white/12">
-                  <div className="mb-4 text-4xl">{s.icon}</div>
-                  <span className="mb-2 text-xs font-bold text-[#F06292]">STEP {s.step}</span>
-                  <h3 className="mb-2 text-lg font-bold text-white">{s.title}</h3>
-                  <p className="text-sm leading-relaxed text-white/60">{s.desc}</p>
+                <div className="glass-card-premium flex flex-col items-center rounded-2xl p-8 text-center transition-all hover:-translate-y-2 hover:scale-105">
+                  <div className="mb-4 text-5xl">{s.icon}</div>
+                  <span className="mb-2 text-xs font-bold tracking-wider text-[#D4AF37]">STEP {s.step}</span>
+                  <h3 className="mb-2 text-xl font-black text-white">{s.title}</h3>
+                  <p className="text-sm leading-relaxed text-white/70">{s.desc}</p>
                 </div>
               </div>
             ))}
@@ -293,7 +286,7 @@ export default function Home() {
             <span className="mb-3 inline-block rounded-full bg-[#F3E5F5] px-4 py-1 text-xs font-bold text-[#7B1FA2]">
               FOR YOU
             </span>
-            <h2 className="mb-4 text-3xl font-extrabold text-gray-900 sm:text-4xl">
+            <h2 className="mb-4 text-4xl font-black tracking-tighter text-gray-900 sm:text-5xl">
               이런 분들과 함께합니다
             </h2>
           </div>
@@ -327,7 +320,7 @@ export default function Home() {
             ].map((p) => (
               <div
                 key={p.title}
-                className="group rounded-2xl border border-gray-100 p-8 text-center transition-all hover:-translate-y-1 hover:shadow-lg"
+                className="card-hover-lift group rounded-2xl border-2 border-gray-100 bg-white p-8 text-center shadow-md"
               >
                 <div
                   className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl text-3xl transition-transform group-hover:scale-110"
@@ -335,8 +328,8 @@ export default function Home() {
                 >
                   {p.emoji}
                 </div>
-                <h3 className="mb-2 text-lg font-bold text-gray-900">{p.title}</h3>
-                <p className="text-sm leading-relaxed text-gray-500">{p.desc}</p>
+                <h3 className="mb-2 text-xl font-black text-gray-900">{p.title}</h3>
+                <p className="text-sm leading-relaxed text-gray-600">{p.desc}</p>
               </div>
             ))}
           </div>
@@ -350,7 +343,7 @@ export default function Home() {
             <span className="mb-3 inline-block rounded-full bg-[#FCE4EC] px-4 py-1 text-xs font-bold text-[#E91E63]">
               REAL STORIES
             </span>
-            <h2 className="mb-4 text-3xl font-extrabold text-gray-900 sm:text-4xl">
+            <h2 className="mb-4 text-4xl font-black tracking-tighter text-gray-900 sm:text-5xl">
               함께한 분들의 이야기
             </h2>
             <p className="mx-auto max-w-lg text-base text-gray-500">
@@ -362,7 +355,7 @@ export default function Home() {
             {reviews.map((r) => (
               <div
                 key={r.name}
-                className="relative overflow-hidden rounded-2xl bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
+                className="card-hover-lift relative overflow-hidden rounded-2xl border border-gray-100 bg-white p-8 shadow-lg"
               >
                 {/* 장식 */}
                 <div className="absolute top-0 right-0 h-20 w-20 rounded-bl-full bg-gradient-to-br from-[#7B1FA2]/5 to-[#E91E63]/5" />
@@ -413,10 +406,10 @@ export default function Home() {
             <span className="text-xs font-semibold text-white">2025 카운셀러 모집 중</span>
           </div>
 
-          <h2 className="mb-4 text-3xl font-extrabold text-white sm:text-5xl">
+          <h2 className="mb-6 text-4xl font-black tracking-tighter text-white sm:text-6xl lg:text-7xl">
             아모레 카운셀러가
             <br />
-            되어보세요
+            <span className="gradient-text-gold">되어보세요</span>
           </h2>
 
           <p className="mx-auto mb-6 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg">
@@ -464,9 +457,9 @@ export default function Home() {
 
           <Link
             href="/apply"
-            className="inline-block rounded-full bg-white px-12 py-4 text-sm font-bold text-[#7B1FA2] shadow-xl transition-all hover:scale-105 hover:shadow-2xl"
+            className="btn-shimmer animate-glow-gold inline-block rounded-full bg-gradient-to-r from-[#D4AF37] via-[#F4E4C1] to-[#B8941E] px-16 py-5 text-base font-black text-[#0a0a0a] shadow-2xl transition-all hover:scale-105"
           >
-            지금 바로 지원하기
+            지금 바로 지원하기 →
           </Link>
         </div>
       </section>
