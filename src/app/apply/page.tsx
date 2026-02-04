@@ -268,7 +268,7 @@ export default function ApplyPage() {
                     <div className="grid grid-cols-2 gap-2">
                       {[
                         "저속노화 스킨케어",
-                        "역노화 메이크업",
+                        "저속노화 메이크업",
                         "이너뷰티",
                         "바디&웰니스",
                         "퍼스널 브랜딩",

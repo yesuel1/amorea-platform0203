@@ -18,7 +18,7 @@ export default function Navbar({
   const [open, setOpen] = useState(false);
 
   const defaultLinks: NavLink[] = [
-    { href: "#about", label: "역노화란" },
+    { href: "#about", label: "저속노화란" },
     { href: "#counselors", label: "카운셀러" },
     { href: "#reviews", label: "후기" },
     { href: "#recruit", label: "함께하기" },

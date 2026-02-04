@@ -199,7 +199,7 @@ export default async function CounselorDetail({
             {c.name} 카운셀러와 상담하기
           </h2>
           <p className="mb-8 text-sm text-white/80">
-            역노화 뷰티의 첫 걸음을 함께 시작해보세요.
+            저속노화 뷰티의 첫 걸음을 함께 시작해보세요.
           </p>
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <a

@@ -28,7 +28,7 @@ export default function Home() {
   const journeySteps = [
     {
       step: "01",
-      title: "나를 위한 역노화",
+      title: "나를 위한 저속노화",
       desc: "전문 교육으로 저속노화 비법을 내 몸에 먼저 적용합니다.",
       icon: "🌱",
     },
@@ -78,7 +78,7 @@ export default function Home() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#E91E63] opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-[#E91E63]" />
             </span>
-            <span className="text-xs font-medium text-white/80">저속노화 · 역노화 뷰티 플랫폼</span>
+            <span className="text-xs font-medium text-white/80">저속노화 뷰티 플랫폼</span>
           </div>
 
           <h1 className="mb-6 text-5xl font-black leading-tight tracking-tighter text-white sm:text-7xl lg:text-8xl sm:leading-[1.1]">
@@ -91,7 +91,7 @@ export default function Home() {
 
           <p className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">
             아모레 분당점에서 시작하는{" "}
-            <span className="font-semibold text-[#F06292]">저속노화 · 역노화</span> 라이프.
+            <span className="font-semibold text-[#F06292]">저속노화</span> 라이프.
             <br className="hidden sm:block" />
             건강하게 아름다워지면서, 나만의 브랜드와 수익까지 만들어보세요.
           </p>
@@ -101,7 +101,7 @@ export default function Home() {
               href="#about"
               className="btn-shimmer animate-glow-gold w-full rounded-full bg-gradient-to-r from-[#D4AF37] via-[#F4E4C1] to-[#B8941E] px-12 py-5 text-base font-black text-[#0a0a0a] shadow-2xl transition-transform hover:scale-105 sm:w-auto"
             >
-              역노화의 비밀 알아보기
+              저속노화의 비밀 알아보기
             </a>
             <Link
               href="/apply"
@@ -113,7 +113,7 @@ export default function Home() {
 
           {/* 키워드 태그 */}
           <div className="mt-12 flex flex-wrap justify-center gap-3">
-            {["#저속노화", "#역노화", "#셀프뷰티", "#퍼스널브랜딩"].map((tag) => (
+            {["#저속노화", "#안티에이징", "#셀프뷰티", "#퍼스널브랜딩"].map((tag) => (
               <span
                 key={tag}
                 className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs text-white/50"
@@ -132,7 +132,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ==================== 역노화란? 섹션 ==================== */}
+      {/* ==================== 저속노화란? 섹션 ==================== */}
       <section id="about" className="relative overflow-hidden bg-white px-4 py-24 sm:px-6">
         <div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-[#F3E5F5] blur-[100px]" />
         <div className="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#FCE4EC] blur-[80px]" />
@@ -143,7 +143,7 @@ export default function Home() {
               REVERSE AGING
             </span>
             <h2 className="mb-4 text-4xl font-black tracking-tighter text-gray-900 sm:text-5xl">
-              <span className="gradient-text">저속노화 · 역노화</span>란?
+              <span className="gradient-text">저속노화</span>란?
             </h2>
             <p className="mx-auto max-w-2xl text-base leading-relaxed text-gray-500">
               단순히 늙지 않는 것이 아닙니다. 세포부터 피부, 체형, 마인드까지
@@ -169,7 +169,7 @@ export default function Home() {
               {
                 icon: "💫",
                 title: "라이프스타일 리셋",
-                desc: "식습관, 운동, 스트레스 관리. 일상 전체를 역노화 루틴으로 바꿉니다.",
+                desc: "식습관, 운동, 스트레스 관리. 일상 전체를 저속노화 루틴으로 바꿉니다.",
                 gradient: "from-[#9C27B0]/10 to-[#CE93D8]/5",
               },
             ].map((item) => (
@@ -194,10 +194,10 @@ export default function Home() {
               EXPERT TEAM
             </span>
             <h2 className="mb-4 text-4xl font-black tracking-tighter text-gray-900 sm:text-5xl">
-              역노화 전문 뷰티 카운셀러
+              저속노화 전문 뷰티 카운셀러
             </h2>
             <p className="mx-auto max-w-lg text-base text-gray-500">
-              아모레퍼시픽 전문 교육을 이수한 카운셀러가 당신의 역노화 여정을 함께합니다.
+              아모레퍼시픽 전문 교육을 이수한 카운셀러가 당신의 저속노화 여정을 함께합니다.
             </p>
           </div>
 
@@ -314,7 +314,7 @@ export default function Home() {
               {
                 emoji: "✨",
                 title: "뷰티 러버",
-                desc: "좋아하는 것을 직업으로. 역노화 뷰티 전문가로 성장하세요.",
+                desc: "좋아하는 것을 직업으로. 저속노화 뷰티 전문가로 성장하세요.",
                 color: "#E91E63",
               },
             ].map((p) => (
@@ -443,7 +443,7 @@ export default function Home() {
           {/* 혜택 */}
           <div className="mb-10 grid gap-4 sm:grid-cols-3">
             {[
-              { icon: "📚", title: "전문 교육 무료", desc: "역노화 뷰티 전문가 교육" },
+              { icon: "📚", title: "전문 교육 무료", desc: "저속노화 뷰티 전문가 교육" },
               { icon: "💰", title: "유연한 수익", desc: "내 속도에 맞는 활동과 보상" },
               { icon: "🎯", title: "퍼스널 브랜딩", desc: "나만의 뷰티 브랜드 구축 지원" },
             ].map((b) => (
@@ -489,7 +489,7 @@ export default function Home() {
             <div>
               <h3 className="mb-4 text-xs font-bold tracking-widest text-gray-400 uppercase">바로가기</h3>
               <ul className="space-y-2 text-sm text-gray-500">
-                <li><a href="#about" className="transition-colors hover:text-white">역노화란</a></li>
+                <li><a href="#about" className="transition-colors hover:text-white">저속노화란</a></li>
                 <li><a href="#counselors" className="transition-colors hover:text-white">카운셀러 소개</a></li>
                 <li><a href="#reviews" className="transition-colors hover:text-white">후기</a></li>
                 <li><a href="#recruit" className="transition-colors hover:text-white">카운셀러 지원</a></li>
