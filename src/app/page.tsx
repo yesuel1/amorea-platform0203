@@ -71,12 +71,12 @@ export default function Home() {
             <a href="#reviews" className="hover:text-[#7B1FA2] transition-colors">후기</a>
             <a href="#recruit" className="hover:text-[#7B1FA2] transition-colors">함께하기</a>
           </div>
-          <a
-            href="#recruit"
+          <Link
+            href="/apply"
             className="hidden rounded-full bg-gradient-to-r from-[#7B1FA2] to-[#E91E63] px-5 py-2 text-xs font-semibold text-white transition-transform hover:scale-105 sm:inline-block"
           >
             카운셀러 지원
-          </a>
+          </Link>
         </div>
       </nav>
 
@@ -134,12 +134,12 @@ export default function Home() {
             >
               역노화의 비밀 알아보기
             </a>
-            <a
-              href="#recruit"
+            <Link
+              href="/apply"
               className="w-full rounded-full border border-white/20 bg-white/5 px-10 py-4 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:border-white/40 hover:bg-white/10 sm:w-auto"
             >
               카운셀러로 함께하기
-            </a>
+            </Link>
           </div>
 
           {/* 키워드 태그 */}
@@ -486,12 +486,12 @@ export default function Home() {
             ))}
           </div>
 
-          <a
-            href="#"
+          <Link
+            href="/apply"
             className="inline-block rounded-full bg-white px-12 py-4 text-sm font-bold text-[#7B1FA2] shadow-xl transition-all hover:scale-105 hover:shadow-2xl"
           >
             지금 바로 지원하기
-          </a>
+          </Link>
         </div>
       </section>
 
