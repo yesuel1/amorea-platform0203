@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { counselors } from "@/data/counselors";
 import Navbar from "@/components/Navbar";
+import HeroCarousel from "@/components/HeroCarousel";
+import BeforeAfterGallery from "@/components/BeforeAfterGallery";
+import StatsSection from "@/components/StatsSection";
 
 export default function Home() {
 
@@ -57,79 +60,8 @@ export default function Home() {
       <Navbar />
 
       {/* ==================== 히어로 섹션 ==================== */}
-      <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 pt-16">
-        {/* 배경 그라데이션 + 장식 */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(135deg, #0f0517 0%, #1a0a2e 25%, #2d1b4e 50%, #4a1942 75%, #1a0a2e 100%)",
-          }}
-        />
-        {/* 글로우 오브 장식 */}
-        <div className="absolute top-1/4 left-1/4 h-72 w-72 rounded-full bg-[#7B1FA2]/20 blur-[100px]" />
-        <div className="absolute bottom-1/4 right-1/4 h-96 w-96 rounded-full bg-[#E91E63]/15 blur-[120px]" />
-        <div className="absolute top-1/2 left-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#9C27B0]/10 blur-[80px]" />
-
-        <div className="relative z-10 mx-auto max-w-4xl text-center">
-          {/* 배지 */}
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#E91E63] opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#E91E63]" />
-            </span>
-            <span className="text-xs font-medium text-white/80">저속노화 뷰티 플랫폼</span>
-          </div>
-
-          <h1 className="mb-6 text-5xl font-black leading-tight tracking-tighter text-white sm:text-7xl lg:text-8xl sm:leading-[1.1]">
-            나이는 숫자일 뿐,
-            <br />
-            <span className="gradient-text-gold">
-              되돌리는 아름다움
-            </span>
-          </h1>
-
-          <p className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">
-            아모레 분당점에서 시작하는{" "}
-            <span className="font-semibold text-[#F06292]">저속노화</span> 라이프.
-            <br className="hidden sm:block" />
-            건강하게 아름다워지면서, 나만의 브랜드와 수익까지 만들어보세요.
-          </p>
-
-          <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <a
-              href="#about"
-              className="btn-shimmer animate-glow-gold w-full rounded-full bg-gradient-to-r from-[#D4AF37] via-[#F4E4C1] to-[#B8941E] px-12 py-5 text-base font-black text-[#0a0a0a] shadow-2xl transition-transform hover:scale-105 sm:w-auto"
-            >
-              저속노화의 비밀 알아보기
-            </a>
-            <Link
-              href="/apply"
-              className="glass-card-premium w-full rounded-full px-12 py-5 text-base font-bold text-white transition-all hover:scale-105 hover:border-[#D4AF37]/50 sm:w-auto"
-            >
-              카운셀러로 함께하기
-            </Link>
-          </div>
-
-          {/* 키워드 태그 */}
-          <div className="mt-12 flex flex-wrap justify-center gap-3">
-            {["#저속노화", "#안티에이징", "#셀프뷰티", "#퍼스널브랜딩"].map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs text-white/50"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* 스크롤 유도 */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <svg className="h-5 w-5 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
-        </div>
+      <section className="relative min-h-screen overflow-hidden">
+        <HeroCarousel />
       </section>
 
       {/* ==================== 저속노화란? 섹션 ==================== */}
@@ -186,6 +118,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ==================== 통계 섹션 ==================== */}
+      <StatsSection />
+
       {/* ==================== 카운셀러 소개 섹션 ==================== */}
       <section id="counselors" className="bg-[#FAFAFA] px-4 py-24 sm:px-6">
         <div className="mx-auto max-w-6xl">
@@ -208,18 +143,40 @@ export default function Home() {
                 href={`/counselors/${c.id}`}
                 className="card-hover-lift group relative overflow-hidden rounded-2xl bg-white shadow-lg border border-gray-100"
               >
-                {/* 카드 상단 그라데이션 */}
-                <div
-                  className="flex h-36 items-center justify-center"
-                  style={{
-                    background: `linear-gradient(135deg, ${
-                      idx % 2 === 0 ? "#7B1FA2" : "#E91E63"
-                    } 0%, ${idx % 2 === 0 ? "#E91E63" : "#9C27B0"} 100%)`,
-                  }}
-                >
-                  <div className="flex h-20 w-20 items-center justify-center rounded-full bg-white/20 text-4xl backdrop-blur-sm transition-transform group-hover:scale-110">
-                    {c.emoji}
-                  </div>
+                {/* 카드 상단 프로필 이미지 */}
+                <div className="relative h-64 overflow-hidden">
+                  {c.image ? (
+                    <>
+                      <div
+                        className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                        style={{
+                          backgroundImage: `url(${c.image})`,
+                        }}
+                      />
+                      {/* 그라데이션 오버레이 */}
+                      <div
+                        className="absolute inset-0"
+                        style={{
+                          background: `linear-gradient(to bottom, transparent 0%, ${
+                            idx % 2 === 0 ? "#7B1FA2" : "#E91E63"
+                          }40 100%)`,
+                        }}
+                      />
+                    </>
+                  ) : (
+                    <div
+                      className="flex h-full items-center justify-center"
+                      style={{
+                        background: `linear-gradient(135deg, ${
+                          idx % 2 === 0 ? "#7B1FA2" : "#E91E63"
+                        } 0%, ${idx % 2 === 0 ? "#E91E63" : "#9C27B0"} 100%)`,
+                      }}
+                    >
+                      <div className="flex h-20 w-20 items-center justify-center rounded-full bg-white/20 text-4xl backdrop-blur-sm">
+                        {c.emoji}
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className="p-6 text-center">
                   <h3 className="mb-2 text-xl font-black text-gray-900">{c.name}</h3>
@@ -335,6 +292,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ==================== 비포/애프터 갤러리 ==================== */}
+      <BeforeAfterGallery />
 
       {/* ==================== 고객 후기 섹션 ==================== */}
       <section id="reviews" className="bg-[#FAFAFA] px-4 py-24 sm:px-6">
