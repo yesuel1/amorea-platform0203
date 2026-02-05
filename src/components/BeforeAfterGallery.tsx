@@ -11,7 +11,7 @@ interface BeforeAfter {
   duration: string;
 }
 
-const gallery: BeforeAfter[] = [
+const defaultGallery: BeforeAfter[] = [
   {
     id: 1,
     title: "피부 결 개선",
@@ -38,9 +38,13 @@ const gallery: BeforeAfter[] = [
   },
 ];
 
-export default function BeforeAfterGallery() {
+export default function BeforeAfterGallery({ gallery = defaultGallery }: { gallery?: BeforeAfter[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slidePosition, setSlidePosition] = useState(50);
+
+  if (gallery.length === 0) {
+    gallery = defaultGallery;
+  }
 
   const current = gallery[currentIndex];
 

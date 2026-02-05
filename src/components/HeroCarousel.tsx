@@ -10,7 +10,7 @@ interface Slide {
   gradient: string;
 }
 
-const slides: Slide[] = [
+const defaultSlides: Slide[] = [
   {
     id: 1,
     title: "나이는 숫자일 뿐,",
@@ -34,7 +34,8 @@ const slides: Slide[] = [
   },
 ];
 
-export default function HeroCarousel() {
+export default function HeroCarousel({ slides }: { slides?: Slide[] }) {
+  const displaySlides = slides && slides.length > 0 ? slides : defaultSlides;
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -42,13 +43,13 @@ export default function HeroCarousel() {
     const timer = setInterval(() => {
       setIsAnimating(true);
       setTimeout(() => {
-        setCurrentSlide((prev) => (prev + 1) % slides.length);
+        setCurrentSlide((prev) => (prev + 1) % displaySlides.length);
         setIsAnimating(false);
       }, 500);
     }, 5000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [displaySlides]);
 
   const goToSlide = (index: number) => {
     if (index !== currentSlide) {
@@ -63,7 +64,7 @@ export default function HeroCarousel() {
   return (
     <div className="relative h-full w-full">
       {/* 배경 이미지들 */}
-      {slides.map((slide, index) => (
+      {displaySlides.map((slide, index) => (
         <div
           key={slide.id}
           className={`absolute inset-0 transition-opacity duration-1000 ${
@@ -114,10 +115,10 @@ export default function HeroCarousel() {
             }`}
           >
             <h1 className="mb-6 text-5xl font-black leading-tight tracking-tighter text-white sm:text-7xl lg:text-8xl sm:leading-[1.1]">
-              {slides[currentSlide].title}
+              {displaySlides[currentSlide].title}
               <br />
               <span className="gradient-text-gold">
-                {slides[currentSlide].subtitle}
+                {displaySlides[currentSlide].subtitle}
               </span>
             </h1>
           </div>
@@ -163,7 +164,7 @@ export default function HeroCarousel() {
 
       {/* 인디케이터 */}
       <div className="absolute bottom-12 left-1/2 z-20 flex -translate-x-1/2 gap-2">
-        {slides.map((_, index) => (
+        {displaySlides.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}

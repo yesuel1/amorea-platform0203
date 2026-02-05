@@ -7,10 +7,9 @@ interface Stat {
   label: string;
   suffix: string;
   icon: string;
-  decimals?: number;
 }
 
-const stats: Stat[] = [
+const defaultStats: Stat[] = [
   {
     value: 3000,
     label: "만족한 고객",
@@ -34,7 +33,6 @@ const stats: Stat[] = [
     label: "고객 평점",
     suffix: "/5",
     icon: "🌟",
-    decimals: 1,
   },
 ];
 
@@ -42,8 +40,9 @@ function StatCard({ stat, index }: { stat: Stat; index: number }) {
   const { ref, count } = useCountUp(stat.value, 2000);
 
   const formatNumber = (num: number) => {
-    if (stat.decimals) {
-      return num.toFixed(stat.decimals);
+    // Check if the value should have decimals (e.g., 4.9)
+    if (num % 1 !== 0) {
+      return num.toFixed(1);
     }
     return Math.floor(num).toLocaleString();
   };
@@ -73,7 +72,7 @@ function StatCard({ stat, index }: { stat: Stat; index: number }) {
   );
 }
 
-export default function StatsSection() {
+export default function StatsSection({ stats = defaultStats }: { stats?: Stat[] }) {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-[#1a0a2e] via-[#2d1b4e] to-[#4a1942] px-4 py-20 sm:px-6">
       {/* 배경 장식 */}

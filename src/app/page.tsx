@@ -5,55 +5,164 @@ import HeroCarousel from "@/components/HeroCarousel";
 import BeforeAfterGallery from "@/components/BeforeAfterGallery";
 import StatsSection from "@/components/StatsSection";
 import ReviewCard from "@/components/ReviewCard";
+import {
+  getHeroSlides,
+  getAboutCards,
+  getStatistics,
+  getCounselors,
+  getReviews,
+  getBeforeAfter,
+  getJourneySteps,
+  getTargetPersonas,
+  getBenefits,
+} from "@/lib/notion-fetchers";
 
-export default function Home() {
+export default async function Home() {
+  // Notion에서 데이터 가져오기 (빌드 타임에 실행)
+  // 환경 변수가 없으면 빈 배열 반환하고 fallback 사용
+  let heroSlides: any[] = [];
+  let aboutCards: any[] = [];
+  let statistics: any[] = [];
+  let notionCounselors: any[] = [];
+  let reviews: any[] = [];
+  let beforeAfter: any[] = [];
+  let journeySteps: any[] = [];
+  let personas: any[] = [];
+  let benefits: any[] = [];
 
-  const reviews = [
+  // Notion API가 설정되어 있을 때만 데이터 가져오기
+  if (process.env.NOTION_API_KEY) {
+    try {
+      [
+        heroSlides,
+        aboutCards,
+        statistics,
+        notionCounselors,
+        reviews,
+        beforeAfter,
+        journeySteps,
+        personas,
+        benefits,
+      ] = await Promise.all([
+        getHeroSlides().catch(() => []),
+        getAboutCards().catch(() => []),
+        getStatistics().catch(() => []),
+        getCounselors().catch(() => []),
+        getReviews().catch(() => []),
+        getBeforeAfter().catch(() => []),
+        getJourneySteps().catch(() => []),
+        getTargetPersonas().catch(() => []),
+        getBenefits().catch(() => []),
+      ]);
+    } catch (error) {
+      console.log('Notion API 연동 실패, fallback 데이터 사용:', error);
+    }
+  }
+
+  // Fallback: Notion 데이터가 없으면 기존 데이터 사용
+  const displayCounselors = notionCounselors.length > 0 ? notionCounselors : counselors;
+  const displayReviews = reviews.length > 0 ? reviews : [
     {
+      id: 1,
       name: "김서연",
-      age: "38세 · 육아맘",
+      age: 38,
       rating: 5,
-      text: "아이 둘 키우면서 나를 잃어가던 중 아모레를 만났어요. 피부도 좋아지고, 카운셀러 활동으로 용돈도 벌고, 무엇보다 '나'를 되찾은 느낌이에요.",
+      content: "아이 둘 키우면서 나를 잃어가던 중 아모레를 만났어요. 피부도 좋아지고, 카운셀러 활동으로 용돈도 벌고, 무엇보다 '나'를 되찾은 느낌이에요.",
+      date: "2024-12",
+      program: "육아맘 케어",
     },
     {
+      id: 2,
       name: "이하은",
-      age: "42세 · 자영업자",
+      age: 42,
       rating: 5,
-      text: "카페 운영하면서 시작한 아모레 카운셀러. 고객들한테 저속노화 팁 알려주다 보니 단골도 늘고, 추가 수익까지. 1석3조예요!",
+      content: "카페 운영하면서 시작한 아모레 카운셀러. 고객들한테 저속노화 팁 알려주다 보니 단골도 늘고, 추가 수익까지. 1석3조예요!",
+      date: "2024-11",
+      program: "자영업자 프로그램",
     },
     {
+      id: 3,
       name: "박지민",
-      age: "35세 · N잡러",
+      age: 35,
       rating: 5,
-      text: "블로그 하면서 뷰티 콘텐츠 만들다가 카운셀러 시작했어요. 퍼스널 브랜딩에 이만한 게 없어요. 수익도 꾸준히 올라가고 있어요.",
+      content: "블로그 하면서 뷰티 콘텐츠 만들다가 카운셀러 시작했어요. 퍼스널 브랜딩에 이만한 게 없어요. 수익도 꾸준히 올라가고 있어요.",
+      date: "2024-10",
+      program: "N잡러 과정",
     },
   ];
-
-  const journeySteps = [
+  const displayJourneySteps = journeySteps.length > 0 ? journeySteps : [
     {
-      step: "01",
+      step: 1,
       title: "나를 위한 저속노화",
-      desc: "전문 교육으로 저속노화 비법을 내 몸에 먼저 적용합니다.",
+      description: "전문 교육으로 저속노화 비법을 내 몸에 먼저 적용합니다.",
       icon: "🌱",
     },
     {
-      step: "02",
+      step: 2,
       title: "변화를 공유",
-      desc: "내 경험과 변화를 SNS·블로그로 공유하며 퍼스널 브랜드를 키웁니다.",
+      description: "내 경험과 변화를 SNS·블로그로 공유하며 퍼스널 브랜드를 키웁니다.",
       icon: "📱",
     },
     {
-      step: "03",
+      step: 3,
       title: "함께 성장",
-      desc: "주변 사람들에게 건강한 아름다움을 전하고 추가 수익을 만듭니다.",
+      description: "주변 사람들에게 건강한 아름다움을 전하고 추가 수익을 만듭니다.",
       icon: "🚀",
     },
     {
-      step: "04",
+      step: 4,
       title: "자아실현",
-      desc: "뷰티 전문가로서 나만의 커리어를 완성합니다.",
+      description: "뷰티 전문가로서 나만의 커리어를 완성합니다.",
       icon: "👑",
     },
+  ];
+  const displayAboutCards = aboutCards.length > 0 ? aboutCards : [
+    {
+      icon: "🧬",
+      title: "세포 레벨 케어",
+      description: "피부 장벽 강화, 콜라겐 부스팅, 항산화 영양 공급으로 세포부터 젊어집니다.",
+    },
+    {
+      icon: "🌿",
+      title: "이너뷰티",
+      description: "장 건강, 호르몬 밸런스, 수면 관리까지. 안에서부터 빛나는 진짜 아름다움.",
+    },
+    {
+      icon: "💫",
+      title: "라이프스타일 리셋",
+      description: "식습관, 운동, 스트레스 관리. 일상 전체를 저속노화 루틴으로 바꿉니다.",
+    },
+  ];
+  const displayPersonas = personas.length > 0 ? personas : [
+    {
+      emoji: "👩‍👧‍👦",
+      type: "육아맘",
+      description: "아이를 키우면서도 나만의 시간, 나만의 수익, 나만의 아름다움을 포기하지 마세요.",
+      color: "#E91E63",
+    },
+    {
+      emoji: "🏪",
+      type: "자영업자",
+      description: "기존 사업에 뷰티를 더해 고객 경험을 높이고 추가 매출을 만들어보세요.",
+      color: "#9C27B0",
+    },
+    {
+      emoji: "💻",
+      type: "N잡러",
+      description: "블로그, SNS 콘텐츠와 시너지를 내는 뷰티 퍼스널 브랜딩의 시작.",
+      color: "#7B1FA2",
+    },
+    {
+      emoji: "✨",
+      type: "뷰티 러버",
+      description: "좋아하는 것을 직업으로. 저속노화 뷰티 전문가로 성장하세요.",
+      color: "#E91E63",
+    },
+  ];
+  const displayBenefits = benefits.length > 0 ? benefits : [
+    { icon: "📚", title: "전문 교육 무료", description: "저속노화 뷰티 전문가 교육" },
+    { icon: "💰", title: "유연한 수익", description: "내 속도에 맞는 활동과 보상" },
+    { icon: "🎯", title: "퍼스널 브랜딩", description: "나만의 뷰티 브랜드 구축 지원" },
   ];
 
   return (
@@ -62,7 +171,7 @@ export default function Home() {
 
       {/* ==================== 히어로 섹션 ==================== */}
       <section className="relative min-h-screen overflow-hidden">
-        <HeroCarousel />
+        <HeroCarousel slides={heroSlides} />
       </section>
 
       {/* ==================== 저속노화란? 섹션 ==================== */}
@@ -86,33 +195,18 @@ export default function Home() {
           </div>
 
           <div className="grid gap-6 sm:grid-cols-3">
-            {[
-              {
-                icon: "🧬",
-                title: "세포 레벨 케어",
-                desc: "피부 장벽 강화, 콜라겐 부스팅, 항산화 영양 공급으로 세포부터 젊어집니다.",
-                gradient: "from-[#7B1FA2]/10 to-[#9C27B0]/5",
-              },
-              {
-                icon: "🌿",
-                title: "이너뷰티",
-                desc: "장 건강, 호르몬 밸런스, 수면 관리까지. 안에서부터 빛나는 진짜 아름다움.",
-                gradient: "from-[#E91E63]/10 to-[#F06292]/5",
-              },
-              {
-                icon: "💫",
-                title: "라이프스타일 리셋",
-                desc: "식습관, 운동, 스트레스 관리. 일상 전체를 저속노화 루틴으로 바꿉니다.",
-                gradient: "from-[#9C27B0]/10 to-[#CE93D8]/5",
-              },
-            ].map((item) => (
+            {displayAboutCards.map((item: { icon: string; title: string; description: string }, idx: number) => (
               <div
                 key={item.title}
-                className={`card-hover-lift rounded-2xl bg-gradient-to-br ${item.gradient} border border-gray-100 p-8 shadow-lg`}
+                className={`card-hover-lift rounded-2xl bg-gradient-to-br ${
+                  idx === 0 ? "from-[#7B1FA2]/10 to-[#9C27B0]/5" :
+                  idx === 1 ? "from-[#E91E63]/10 to-[#F06292]/5" :
+                  "from-[#9C27B0]/10 to-[#CE93D8]/5"
+                } border border-gray-100 p-8 shadow-lg`}
               >
                 <div className="mb-4 text-5xl">{item.icon}</div>
                 <h3 className="mb-2 text-xl font-black text-gray-900">{item.title}</h3>
-                <p className="text-sm leading-relaxed text-gray-600">{item.desc}</p>
+                <p className="text-sm leading-relaxed text-gray-600">{item.description}</p>
               </div>
             ))}
           </div>
@@ -120,7 +214,7 @@ export default function Home() {
       </section>
 
       {/* ==================== 통계 섹션 ==================== */}
-      <StatsSection />
+      <StatsSection stats={statistics} />
 
       {/* ==================== 카운셀러 소개 섹션 ==================== */}
       <section id="counselors" className="bg-[#FAFAFA] px-4 py-24 sm:px-6">
@@ -138,7 +232,7 @@ export default function Home() {
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {counselors.map((c, idx) => (
+            {displayCounselors.map((c: any, idx: number) => (
               <Link
                 key={c.id}
                 href={`/counselors/${c.id}`}
@@ -219,17 +313,17 @@ export default function Home() {
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {journeySteps.map((s, idx) => (
+            {displayJourneySteps.map((s: any, idx: number) => (
               <div key={s.step} className="group relative">
                 {/* 연결선 (모바일에서는 숨김) */}
-                {idx < journeySteps.length - 1 && (
+                {idx < displayJourneySteps.length - 1 && (
                   <div className="absolute top-10 left-[calc(50%+40px)] hidden h-0.5 w-[calc(100%-40px)] bg-gradient-to-r from-[#7B1FA2]/30 to-[#E91E63]/30 lg:block" />
                 )}
                 <div className="glass-card-premium flex flex-col items-center rounded-2xl p-8 text-center transition-all hover:-translate-y-2 hover:scale-105">
                   <div className="mb-4 text-5xl">{s.icon}</div>
-                  <span className="mb-2 text-xs font-bold tracking-wider text-[#D4AF37]">STEP {s.step}</span>
+                  <span className="mb-2 text-xs font-bold tracking-wider text-[#D4AF37]">STEP {String(s.step).padStart(2, '0')}</span>
                   <h3 className="mb-2 text-xl font-black text-white">{s.title}</h3>
-                  <p className="text-sm leading-relaxed text-white/70">{s.desc}</p>
+                  <p className="text-sm leading-relaxed text-white/70">{s.description}</p>
                 </div>
               </div>
             ))}
@@ -250,34 +344,9 @@ export default function Home() {
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              {
-                emoji: "👩‍👧‍👦",
-                title: "육아맘",
-                desc: "아이를 키우면서도 나만의 시간, 나만의 수익, 나만의 아름다움을 포기하지 마세요.",
-                color: "#E91E63",
-              },
-              {
-                emoji: "🏪",
-                title: "자영업자",
-                desc: "기존 사업에 뷰티를 더해 고객 경험을 높이고 추가 매출을 만들어보세요.",
-                color: "#9C27B0",
-              },
-              {
-                emoji: "💻",
-                title: "N잡러",
-                desc: "블로그, SNS 콘텐츠와 시너지를 내는 뷰티 퍼스널 브랜딩의 시작.",
-                color: "#7B1FA2",
-              },
-              {
-                emoji: "✨",
-                title: "뷰티 러버",
-                desc: "좋아하는 것을 직업으로. 저속노화 뷰티 전문가로 성장하세요.",
-                color: "#E91E63",
-              },
-            ].map((p) => (
+            {displayPersonas.map((p: any) => (
               <div
-                key={p.title}
+                key={p.type}
                 className="card-hover-lift group rounded-2xl border-2 border-gray-100 bg-white p-8 text-center shadow-md"
               >
                 <div
@@ -286,8 +355,8 @@ export default function Home() {
                 >
                   {p.emoji}
                 </div>
-                <h3 className="mb-2 text-xl font-black text-gray-900">{p.title}</h3>
-                <p className="text-sm leading-relaxed text-gray-600">{p.desc}</p>
+                <h3 className="mb-2 text-xl font-black text-gray-900">{p.type}</h3>
+                <p className="text-sm leading-relaxed text-gray-600">{p.description}</p>
               </div>
             ))}
           </div>
@@ -295,7 +364,7 @@ export default function Home() {
       </section>
 
       {/* ==================== 비포/애프터 갤러리 ==================== */}
-      <BeforeAfterGallery />
+      <BeforeAfterGallery gallery={beforeAfter} />
 
       {/* ==================== 고객 후기 섹션 ==================== */}
       <section id="reviews" className="bg-[#FAFAFA] px-4 py-24 sm:px-6">
@@ -313,8 +382,8 @@ export default function Home() {
           </div>
 
           <div className="grid gap-6 sm:grid-cols-3">
-            {reviews.map((r) => (
-              <ReviewCard key={r.name} review={r} />
+            {displayReviews.map((r: any) => (
+              <ReviewCard key={r.id} review={r} />
             ))}
           </div>
         </div>
@@ -374,15 +443,11 @@ export default function Home() {
 
           {/* 혜택 */}
           <div className="mb-10 grid gap-4 sm:grid-cols-3">
-            {[
-              { icon: "📚", title: "전문 교육 무료", desc: "저속노화 뷰티 전문가 교육" },
-              { icon: "💰", title: "유연한 수익", desc: "내 속도에 맞는 활동과 보상" },
-              { icon: "🎯", title: "퍼스널 브랜딩", desc: "나만의 뷰티 브랜드 구축 지원" },
-            ].map((b) => (
+            {displayBenefits.map((b: any) => (
               <div key={b.title} className="rounded-xl bg-white/10 p-5 backdrop-blur-sm">
                 <div className="mb-2 text-2xl">{b.icon}</div>
                 <h3 className="mb-1 text-sm font-bold text-white">{b.title}</h3>
-                <p className="text-xs text-white/70">{b.desc}</p>
+                <p className="text-xs text-white/70">{b.description}</p>
               </div>
             ))}
           </div>

@@ -3,14 +3,22 @@
 import { use3DTilt } from "@/hooks/use3DTilt";
 
 interface Review {
+  id?: number;
   name: string;
-  age: string;
+  age: number | string;
   rating: number;
-  text: string;
+  content?: string;
+  text?: string;
+  date?: string;
+  program?: string;
 }
 
 export default function ReviewCard({ review }: { review: Review }) {
   const { ref, style, handlers } = use3DTilt({ maxTilt: 5, scale: 1.03 });
+
+  // Support both 'content' and 'text' fields
+  const reviewText = review.content || review.text || "";
+  const ageDisplay = typeof review.age === 'number' ? `${review.age}세` : review.age;
 
   return (
     <div
@@ -39,12 +47,12 @@ export default function ReviewCard({ review }: { review: Review }) {
       </div>
 
       <p className="mb-6 text-sm leading-relaxed text-gray-600">
-        &ldquo;{review.text}&rdquo;
+        &ldquo;{reviewText}&rdquo;
       </p>
 
       <div className="border-t border-gray-100 pt-4">
         <p className="text-sm font-bold text-gray-900">{review.name}</p>
-        <p className="text-xs text-gray-400">{review.age}</p>
+        <p className="text-xs text-gray-400">{ageDisplay}</p>
       </div>
     </div>
   );
