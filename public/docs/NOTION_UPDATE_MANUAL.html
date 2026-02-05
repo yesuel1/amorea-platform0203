@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>노션 데이터베이스 업데이트 매뉴얼 | AMOREA 분당점</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #7B1FA2 0%, #E91E63 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 900;
+        }
+
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .header .date {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            backdrop-filter: blur(10px);
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 2em;
+            font-weight: 900;
+            color: #7B1FA2;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #E91E63;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title .icon {
+            font-size: 1.2em;
+        }
+
+        .subsection {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #7B1FA2;
+        }
+
+        .subsection h3 {
+            font-size: 1.5em;
+            color: #E91E63;
+            margin-bottom: 15px;
+        }
+
+        .step {
+            margin: 20px 0;
+            padding: 15px 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #7B1FA2, #E91E63);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .step-content {
+            display: inline-block;
+            vertical-align: top;
+            width: calc(100% - 60px);
+        }
+
+        .code-box {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        .code-box .comment {
+            color: #6272a4;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 5px solid #2196F3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .info-box.warning {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+
+        .info-box.success {
+            background: #d4edda;
+            border-left-color: #28a745;
+        }
+
+        .info-box .icon {
+            font-size: 1.3em;
+            margin-right: 10px;
+        }
+
+        .database-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .database-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .database-card:hover {
+            border-color: #7B1FA2;
+            box-shadow: 0 5px 15px rgba(123, 31, 162, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .database-card h4 {
+            color: #7B1FA2;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .database-card .meta {
+            color: #666;
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+
+        .schema-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .schema-table th {
+            background: linear-gradient(135deg, #7B1FA2, #9C27B0);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .schema-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .schema-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .schema-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .url-box {
+            background: #7B1FA2;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            word-break: break-all;
+        }
+
+        .url-box a {
+            color: #FFD700;
+            text-decoration: none;
+        }
+
+        .url-box a:hover {
+            text-decoration: underline;
+        }
+
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #7B1FA2, #E91E63);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(123, 31, 162, 0.3);
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(123, 31, 162, 0.4);
+        }
+
+        .footer {
+            background: #2d2d2d;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #E91E63;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+
+            .database-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📊 노션 데이터베이스 업데이트 매뉴얼</h1>
+            <div class="subtitle">AMOREA 분당점 웹사이트 콘텐츠 관리 가이드</div>
+            <div class="date">📅 2026년 2월 5일 작성</div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+
+            <!-- Overview Section -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">🎯</span>
+                    개요
+                </h2>
+                <div class="info-box success">
+                    <span class="icon">✅</span>
+                    <strong>현재 상태:</strong> 웹사이트는 Fallback 데이터로 정상 작동 중입니다. 노션 데이터베이스를 설정하면 노션에서 직접 콘텐츠를 관리할 수 있습니다.
+                </div>
+                <p style="font-size: 1.1em; line-height: 1.8; margin: 20px 0;">
+                    이 매뉴얼은 노션(Notion) 데이터베이스를 활용하여 AMOREA 분당점 웹사이트의 콘텐츠를 업데이트하는 방법을 안내합니다.
+                    노션에서 데이터를 수정하면 자동으로 웹사이트에 반영됩니다.
+                </p>
+            </div>
+
+            <!-- Database List Section -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">📚</span>
+                    관리 가능한 데이터베이스
+                </h2>
+                <div class="database-list">
+                    <div class="database-card">
+                        <h4>🎬 Hero Slides</h4>
+                        <p class="meta">📝 3개 슬라이드</p>
+                        <p>메인 페이지 상단 히어로 캐러셀</p>
+                    </div>
+                    <div class="database-card">
+                        <h4>💡 About Cards</h4>
+                        <p class="meta">📝 3개 카드</p>
+                        <p>저속노화 소개 섹션</p>
+                    </div>
+                    <div class="database-card">
+                        <h4>📊 Statistics</h4>
+                        <p class="meta">📝 4개 통계</p>
+                        <p>실적 및 통계 정보</p>
+                    </div>
+                    <div class="database-card">
+                        <h4>👥 Counselors</h4>
+                        <p class="meta">📝 4명</p>
+                        <p>카운셀러 프로필 정보</p>
+                    </div>
+                    <div class="database-card">
+                        <h4>⭐ Reviews</h4>
+                        <p class="meta">📝 3개 후기</p>
+                        <p>고객 리뷰 및 평가</p>
+                    </div>
+                    <div class="database-card">
+                        <h4>📸 Before/After</h4>
+                        <p class="meta">📝 3개 사례</p>
+                        <p>변화 사례 갤러리</p>
+                    </div>
+                    <div class="database-card">
+                        <h4>🚀 Journey Steps</h4>
+                        <p class="meta">📝 4단계</p>
+                        <p>고객 성장 여정</p>
+                    </div>
+                    <div class="database-card">
+                        <h4>🎭 Target Personas</h4>
+                        <p class="meta">📝 4개 타입</p>
+                        <p>타겟 고객군</p>
+                    </div>
+                    <div class="database-card">
+                        <h4>🎁 Benefits</h4>
+                        <p class="meta">📝 3개 혜택</p>
+                        <p>카운셀러 지원 혜택</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Setup Guide Section -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">🔧</span>
+                    초기 설정 가이드
+                </h2>
+
+                <div class="subsection">
+                    <h3>1단계: 노션 Integration 생성</h3>
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <div class="step-content">
+                            <strong>노션 통합 페이지 접속</strong>
+                            <div class="url-box">
+                                <a href="https://www.notion.so/my-integrations" target="_blank">
+                                    https://www.notion.so/my-integrations
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <div class="step-content">
+                            <strong>"+ New integration" 클릭</strong>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <div class="step-content">
+                            <strong>설정 입력</strong>
+                            <ul style="margin-top: 10px; margin-left: 20px;">
+                                <li><strong>Name:</strong> AMOREA Platform (원하는 이름)</li>
+                                <li><strong>Associated workspace:</strong> 작업 공간 선택</li>
+                                <li><strong>Capabilities:</strong> Read, Update, Insert content 모두 체크</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">4</span>
+                        <div class="step-content">
+                            <strong>"Submit" 클릭 후 Integration Token 복사</strong>
+                            <div class="info-box warning">
+                                <span class="icon">⚠️</span>
+                                <strong>중요:</strong> Integration Token은 안전하게 보관하세요. 이 토큰으로 노션 데이터에 접근할 수 있습니다.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>2단계: 노션 데이터베이스 생성</h3>
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <div class="step-content">
+                            <strong>노션에서 새 페이지 생성</strong>
+                            <p>예: "AMOREA 웹사이트 콘텐츠"</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <div class="step-content">
+                            <strong>페이지에 Integration 연결</strong>
+                            <p>페이지 우측 상단 <code>...</code> → "Connections" → Integration 선택</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <div class="step-content">
+                            <strong>데이터베이스 9개 생성</strong>
+                            <p>각 데이터베이스마다 <code>/table</code> 입력 → "Table - Inline" 선택</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>3단계: 데이터베이스 스키마 설정</h3>
+                    <p>각 데이터베이스에 아래 표의 컬럼을 추가하세요:</p>
+
+                    <h4 style="margin: 30px 0 15px; color: #E91E63;">📊 Hero Slides 스키마</h4>
+                    <table class="schema-table">
+                        <thead>
+                            <tr>
+                                <th>컬럼명</th>
+                                <th>타입</th>
+                                <th>설명</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>제목</td>
+                                <td>Title</td>
+                                <td>슬라이드 메인 타이틀</td>
+                            </tr>
+                            <tr>
+                                <td>부제목</td>
+                                <td>Text</td>
+                                <td>슬라이드 서브타이틀</td>
+                            </tr>
+                            <tr>
+                                <td>이미지 URL</td>
+                                <td>URL</td>
+                                <td>배경 이미지 주소</td>
+                            </tr>
+                            <tr>
+                                <td>그라데이션</td>
+                                <td>Text</td>
+                                <td>Tailwind CSS 그라데이션 클래스</td>
+                            </tr>
+                            <tr>
+                                <td>순서</td>
+                                <td>Number</td>
+                                <td>표시 순서 (1, 2, 3...)</td>
+                            </tr>
+                            <tr>
+                                <td>활성화</td>
+                                <td>Checkbox</td>
+                                <td>웹사이트 표시 여부</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4 style="margin: 30px 0 15px; color: #E91E63;">👥 Counselors 스키마</h4>
+                    <table class="schema-table">
+                        <thead>
+                            <tr>
+                                <th>컬럼명</th>
+                                <th>타입</th>
+                                <th>설명</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>이름</td>
+                                <td>Title</td>
+                                <td>카운셀러 이름</td>
+                            </tr>
+                            <tr>
+                                <td>역할</td>
+                                <td>Text</td>
+                                <td>전문 분야</td>
+                            </tr>
+                            <tr>
+                                <td>소개</td>
+                                <td>Text</td>
+                                <td>간단한 소개글</td>
+                            </tr>
+                            <tr>
+                                <td>전문 분야</td>
+                                <td>Text</td>
+                                <td>쉼표로 구분된 전문 분야 목록</td>
+                            </tr>
+                            <tr>
+                                <td>경력</td>
+                                <td>Text</td>
+                                <td>경력 사항</td>
+                            </tr>
+                            <tr>
+                                <td>자격증</td>
+                                <td>Text</td>
+                                <td>쉼표로 구분된 자격증 목록</td>
+                            </tr>
+                            <tr>
+                                <td>프로필 이미지 URL</td>
+                                <td>URL</td>
+                                <td>프로필 사진 주소</td>
+                            </tr>
+                            <tr>
+                                <td>순서</td>
+                                <td>Number</td>
+                                <td>표시 순서</td>
+                            </tr>
+                            <tr>
+                                <td>활성화</td>
+                                <td>Checkbox</td>
+                                <td>웹사이트 표시 여부</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="info-box">
+                        <span class="icon">💡</span>
+                        <strong>팁:</strong> 나머지 7개 데이터베이스의 상세 스키마는
+                        <code>docs/notion-database-schema.md</code> 파일을 참고하세요.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Update Guide Section -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">✏️</span>
+                    콘텐츠 업데이트 방법
+                </h2>
+
+                <div class="subsection">
+                    <h3>일반 업데이트 프로세스</h3>
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <div class="step-content">
+                            <strong>노션 데이터베이스에서 데이터 수정</strong>
+                            <p>원하는 데이터베이스를 열어 내용을 직접 편집합니다.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <div class="step-content">
+                            <strong>변경사항 저장</strong>
+                            <p>노션은 자동 저장되므로 별도 저장 버튼이 없습니다.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <div class="step-content">
+                            <strong>웹사이트 재배포</strong>
+                            <p>GitHub 저장소에 변경사항을 push하면 자동으로 노션 데이터를 가져와 재배포됩니다.</p>
+                            <div class="code-box">
+<span class="comment"># 빈 커밋으로 재배포 트리거</span>
+git commit --allow-empty -m "chore: 노션 콘텐츠 업데이트"
+git push
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">4</span>
+                        <div class="step-content">
+                            <strong>배포 완료 확인 (약 1-2분)</strong>
+                            <div class="url-box">
+                                <a href="https://amorea-platform0203.pages.dev" target="_blank">
+                                    https://amorea-platform0203.pages.dev
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>예시: 카운셀러 정보 업데이트</h3>
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <div class="step-content">
+                            <strong>Counselors 데이터베이스 열기</strong>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <div class="step-content">
+                            <strong>수정할 카운셀러 행 클릭</strong>
+                            <p>예: "김민정" 카운셀러의 소개글 변경</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <div class="step-content">
+                            <strong>"소개" 필드 수정</strong>
+                            <p>새로운 소개 문구 입력</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">4</span>
+                        <div class="step-content">
+                            <strong>재배포 후 웹사이트 확인</strong>
+                            <p>변경된 내용이 웹사이트에 반영됨</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>새로운 항목 추가</h3>
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <div class="step-content">
+                            <strong>데이터베이스 하단의 "+ New" 버튼 클릭</strong>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <div class="step-content">
+                            <strong>모든 필수 필드 입력</strong>
+                            <ul style="margin-top: 10px; margin-left: 20px;">
+                                <li>Title 필드 (제목, 이름 등)</li>
+                                <li>순서 (Number)</li>
+                                <li>활성화 (Checkbox 체크)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <div class="step-content">
+                            <strong>재배포</strong>
+                            <p>새 항목이 웹사이트에 추가됩니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Troubleshooting Section -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">🔍</span>
+                    문제 해결
+                </h2>
+
+                <div class="subsection">
+                    <h3>변경사항이 반영되지 않을 때</h3>
+                    <div class="info-box warning">
+                        <span class="icon">⚠️</span>
+                        <strong>체크리스트:</strong>
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li>✓ "활성화" 체크박스가 체크되어 있는가?</li>
+                            <li>✓ "순서" 필드에 숫자가 입력되어 있는가?</li>
+                            <li>✓ Integration이 데이터베이스에 연결되어 있는가?</li>
+                            <li>✓ 재배포를 실행했는가?</li>
+                            <li>✓ 배포가 완료되었는가? (GitHub Actions 확인)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>데이터가 표시되지 않을 때</h3>
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <div class="step-content">
+                            <strong>로컬에서 빌드 테스트</strong>
+                            <div class="code-box">
+npm run build
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <div class="step-content">
+                            <strong>에러 메시지 확인</strong>
+                            <p>빌드 로그에서 노션 API 관련 에러 확인</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <div class="step-content">
+                            <strong>환경 변수 확인</strong>
+                            <p>Cloudflare Pages에 모든 환경 변수가 설정되어 있는지 확인</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>긴급 상황: Fallback 데이터 사용</h3>
+                    <div class="info-box success">
+                        <span class="icon">✅</span>
+                        <strong>안전장치:</strong> 노션 연동에 문제가 있어도 웹사이트는 Fallback 데이터로 정상 작동합니다.
+                        코드에 하드코딩된 기본 데이터가 자동으로 사용됩니다.
+                    </div>
+                    <p style="margin-top: 15px;">
+                        Fallback 데이터 수정이 필요한 경우:
+                    </p>
+                    <div class="code-box">
+<span class="comment"># 메인 페이지 데이터</span>
+src/app/page.tsx
+
+<span class="comment"># 카운셀러 데이터</span>
+src/data/counselors.ts
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Reference Section -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">📌</span>
+                    빠른 참조
+                </h2>
+
+                <div class="subsection">
+                    <h3>주요 링크</h3>
+                    <table class="schema-table">
+                        <tbody>
+                            <tr>
+                                <td><strong>웹사이트</strong></td>
+                                <td>
+                                    <a href="https://amorea-platform0203.pages.dev" target="_blank">
+                                        https://amorea-platform0203.pages.dev
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>GitHub 저장소</strong></td>
+                                <td>
+                                    <a href="https://github.com/yesuel1/amorea-platform0203" target="_blank">
+                                        https://github.com/yesuel1/amorea-platform0203
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>배포 상태</strong></td>
+                                <td>
+                                    <a href="https://github.com/yesuel1/amorea-platform0203/actions" target="_blank">
+                                        GitHub Actions
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>노션 통합 설정</strong></td>
+                                <td>
+                                    <a href="https://www.notion.so/my-integrations" target="_blank">
+                                        https://www.notion.so/my-integrations
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h3>자주 사용하는 명령어</h3>
+                    <div class="code-box">
+<span class="comment"># 로컬 빌드 테스트</span>
+npm run build
+
+<span class="comment"># 개발 서버 실행</span>
+npm run dev
+
+<span class="comment"># 빈 커밋으로 재배포</span>
+git commit --allow-empty -m "chore: 노션 콘텐츠 업데이트"
+git push
+
+<span class="comment"># Git 상태 확인</span>
+git status
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>환경 변수 목록</h3>
+                    <div class="code-box">
+NOTION_API_KEY
+NOTION_DATABASE_HERO_SLIDES
+NOTION_DATABASE_ABOUT_CARDS
+NOTION_DATABASE_STATISTICS
+NOTION_DATABASE_COUNSELORS
+NOTION_DATABASE_REVIEWS
+NOTION_DATABASE_BEFORE_AFTER
+NOTION_DATABASE_JOURNEY
+NOTION_DATABASE_PERSONAS
+NOTION_DATABASE_BENEFITS
+                    </div>
+                </div>
+            </div>
+
+            <!-- Best Practices Section -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">⭐</span>
+                    권장 사항
+                </h2>
+
+                <div class="info-box">
+                    <span class="icon">💡</span>
+                    <strong>콘텐츠 관리 팁:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li>✓ 변경 전 항상 현재 웹사이트 스크린샷 저장</li>
+                        <li>✓ "활성화" 체크박스로 임시 저장/미리보기 가능</li>
+                        <li>✓ "순서" 필드로 표시 순서 조정 (1, 2, 3...)</li>
+                        <li>✓ 이미지 URL은 https://로 시작하는 안전한 링크 사용</li>
+                        <li>✓ 대량 수정 시 한 번에 하나씩 테스트</li>
+                    </ul>
+                </div>
+
+                <div class="info-box warning">
+                    <span class="icon">⚠️</span>
+                    <strong>주의사항:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li>⚠ Integration Token을 공개하지 마세요</li>
+                        <li>⚠ 데이터베이스 구조(스키마)를 임의로 변경하지 마세요</li>
+                        <li>⚠ 모든 필수 필드(Title, 순서, 활성화)를 입력하세요</li>
+                        <li>⚠ 배포 중에는 추가 push를 하지 마세요</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Support Section -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="icon">🆘</span>
+                    지원 및 문의
+                </h2>
+                <p style="font-size: 1.1em; line-height: 1.8;">
+                    추가 도움이 필요하거나 문제가 발생한 경우:
+                </p>
+                <ul style="margin: 20px 0 20px 30px; font-size: 1.1em; line-height: 2;">
+                    <li>📖 상세 문서: <code>docs/NOTION_SETUP.md</code></li>
+                    <li>📋 데이터베이스 스키마: <code>docs/notion-database-schema.md</code></li>
+                    <li>💾 샘플 CSV 데이터: <code>docs/notion-data/</code></li>
+                </ul>
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="https://github.com/yesuel1/amorea-platform0203" class="button" target="_blank">
+                        📚 GitHub 저장소 방문
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p style="font-size: 1.1em; margin-bottom: 10px;">
+                <strong>AMOREA 분당점 웹사이트 콘텐츠 관리 시스템</strong>
+            </p>
+            <p>
+                Created with ❤️ by <a href="https://claude.ai" target="_blank">Claude Sonnet 4.5</a>
+            </p>
+            <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.7;">
+                © 2026 AMOREA 분당점. All rights reserved.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

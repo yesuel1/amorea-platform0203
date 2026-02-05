@@ -516,7 +516,20 @@ export default async function Home() {
             </div>
           </div>
 
-          <div className="mt-12 border-t border-white/5 pt-6 text-center text-xs text-gray-600">
+          {/* 관리자 매뉴얼 버튼 */}
+          <div className="mt-12 border-t border-white/5 pt-8 text-center">
+            <Link
+              href="/manual"
+              className="inline-flex items-center gap-2 rounded-full bg-white/5 px-6 py-3 text-sm font-bold text-white/70 backdrop-blur-sm transition-all hover:bg-white/10 hover:text-white hover:scale-105"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              관리자 매뉴얼
+            </Link>
+          </div>
+
+          <div className="mt-6 text-center text-xs text-gray-600">
             &copy; 2025 AMOREA 분당점. All rights reserved.
           </div>
         </div>
