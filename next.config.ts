@@ -1,10 +1,9 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  allowedDevOrigins: [
-    "3000-firebase-amoreaplatform-0203-1770165371862.cluster-nle52mxuvfhlkrzyrq6g2cwb52.cloudworkstations.dev",
-    "*.cloudworkstations.dev",
-  ],
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: 'export', // 이 부분을 추가해야 배포용 'out' 폴더가 생깁니다.
+  images: {
+    unoptimized: true, // 정적 배포 시 이미지 오류 방지
+  },
 };
 
 export default nextConfig;
