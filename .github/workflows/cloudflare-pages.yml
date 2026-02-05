@@ -1,0 +1,25 @@
+name: Cloudflare Pages Deployment
+
+on:
+  push:
+    branches: [ main ]  # main 브랜치에 코드가 올라오면 작동합니다.
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          npm install
+          npm run build
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: amorea-platform0203  # 프로젝트 이름이 맞는지 확인하세요.
+          directory: out  # static export 설정인 경우 보통 out 폴더를 사용합니다.
