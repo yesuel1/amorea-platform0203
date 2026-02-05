@@ -1,38 +1,77 @@
 "use client";
 
+import { useCountUp } from "@/hooks/useCountUp";
+
 interface Stat {
-  number: string;
+  value: number;
   label: string;
   suffix: string;
   icon: string;
+  decimals?: number;
 }
 
 const stats: Stat[] = [
   {
-    number: "3,000",
+    value: 3000,
     label: "만족한 고객",
     suffix: "+",
     icon: "👥",
   },
   {
-    number: "97",
+    value: 97,
     label: "재구매율",
     suffix: "%",
     icon: "💯",
   },
   {
-    number: "15",
+    value: 15,
     label: "평균 경력",
     suffix: "년",
     icon: "⭐",
   },
   {
-    number: "4.9",
+    value: 4.9,
     label: "고객 평점",
     suffix: "/5",
     icon: "🌟",
+    decimals: 1,
   },
 ];
+
+function StatCard({ stat, index }: { stat: Stat; index: number }) {
+  const { ref, count } = useCountUp(stat.value, 2000);
+
+  const formatNumber = (num: number) => {
+    if (stat.decimals) {
+      return num.toFixed(stat.decimals);
+    }
+    return Math.floor(num).toLocaleString();
+  };
+
+  return (
+    <div
+      ref={ref}
+      className="group relative"
+      style={{
+        animation: `fadeInUp 0.8s ease-out ${index * 0.1}s both`,
+      }}
+    >
+      <div className="glass-card-premium relative overflow-hidden rounded-2xl p-8 text-center transition-all hover:-translate-y-2 hover:scale-105">
+        <div className="mb-4 text-5xl">{stat.icon}</div>
+        <div className="mb-2 flex items-baseline justify-center gap-1">
+          <span className="text-5xl font-black text-white">
+            {formatNumber(count)}
+          </span>
+          <span className="text-2xl font-bold text-[#D4AF37]">
+            {stat.suffix}
+          </span>
+        </div>
+        <p className="text-sm font-medium text-white/70">{stat.label}</p>
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+      </div>
+    </div>
+  );
+}
 
 export default function StatsSection() {
   return (
@@ -55,37 +94,7 @@ export default function StatsSection() {
         {/* 통계 그리드 */}
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat, idx) => (
-            <div
-              key={stat.label}
-              className="group relative"
-              style={{
-                animation: `fadeInUp 0.8s ease-out ${idx * 0.1}s both`,
-              }}
-            >
-              {/* 카드 */}
-              <div className="glass-card-premium relative overflow-hidden rounded-2xl p-8 text-center transition-all hover:-translate-y-2 hover:scale-105">
-                {/* 아이콘 */}
-                <div className="mb-4 text-5xl">{stat.icon}</div>
-
-                {/* 숫자 */}
-                <div className="mb-2 flex items-baseline justify-center gap-1">
-                  <span className="text-5xl font-black text-white">
-                    {stat.number}
-                  </span>
-                  <span className="text-2xl font-bold text-[#D4AF37]">
-                    {stat.suffix}
-                  </span>
-                </div>
-
-                {/* 레이블 */}
-                <p className="text-sm font-medium text-white/70">
-                  {stat.label}
-                </p>
-
-                {/* 골드 라인 */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-              </div>
-            </div>
+            <StatCard key={stat.label} stat={stat} index={idx} />
           ))}
         </div>
 
